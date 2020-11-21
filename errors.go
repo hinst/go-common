@@ -1,4 +1,4 @@
-package go_common
+package common
 
 func WrapError(message string, e error) ErrorWrapper {
 	return ErrorWrapper{Message: message, InnerError: e}

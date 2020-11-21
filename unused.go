@@ -1,4 +1,4 @@
-package go_common
+package common
 
 func Use(v ...interface{}) {
 

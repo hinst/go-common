@@ -15,8 +15,10 @@ func (e ErrorWrapper) Error() string {
 	return e.Message + " [CAUSED BY]\n" + e.InnerError.Error()
 }
 
-func AssertError(e error) {
-	if nil != e {
-		panic(e)
+func AssertError(errors ...error) {
+	for _, e := range errors {
+		if nil != e {
+			panic(errors)
+		}
 	}
 }

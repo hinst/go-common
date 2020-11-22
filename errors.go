@@ -14,3 +14,9 @@ var _ error = ErrorWrapper{}
 func (e ErrorWrapper) Error() string {
 	return e.Message + " [CAUSED BY]\n" + e.InnerError.Error()
 }
+
+func AssertError(e error) {
+	if nil != e {
+		panic(e)
+	}
+}

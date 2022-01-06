@@ -1,7 +1,11 @@
 package common
 
-func WrapError(message string, e error) ErrorWrapper {
-	return ErrorWrapper{Message: message, InnerError: e}
+func WrapError(message string, e error) *ErrorWrapper {
+	if e != nil {
+		return &ErrorWrapper{Message: message, InnerError: e}
+	} else {
+		return nil
+	}
 }
 
 type ErrorWrapper struct {
@@ -9,16 +13,16 @@ type ErrorWrapper struct {
 	InnerError error
 }
 
-var _ error = ErrorWrapper{}
+var _ error = &ErrorWrapper{}
 
-func (e ErrorWrapper) Error() string {
-	return e.Message + " [CAUSED BY]\n" + e.InnerError.Error()
+func (e *ErrorWrapper) Error() string {
+	return e.Message + " CAUSED BY\n" + e.InnerError.Error()
 }
 
 func AssertError(errors ...error) {
 	for _, e := range errors {
 		if nil != e {
-			panic(errors)
+			panic(e)
 		}
 	}
 }

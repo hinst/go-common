@@ -31,3 +31,11 @@ func AssertWrapped(e error, message string) {
 		}
 	}
 }
+
+func AssertError(errors ...error) {
+	for _, e := range errors {
+		if nil != e {
+			panic(e)
+		}
+	}
+}

@@ -3,8 +3,14 @@ package common
 import "fmt"
 
 type Exception struct {
-	cause   error
 	message string
+	cause   error
+}
+
+func CreateException(message string, cause error) (result Exception) {
+	result.message = message
+	result.cause = cause
+	return
 }
 
 func (exception Exception) Error() string {

@@ -21,7 +21,7 @@ func CreateException(message string, cause error) (result *Exception) {
 }
 
 func CreateExceptionIf(message string, cause error) (result *Exception) {
-	if cause != nil {
+	if IsThere(cause) {
 		result = CreateException(message, cause)
 	}
 	return
@@ -29,7 +29,7 @@ func CreateExceptionIf(message string, cause error) (result *Exception) {
 
 func (exception *Exception) Error() string {
 	var result = exception.message
-	if exception.cause != nil {
+	if IsThere(exception.cause) {
 		result += "\n• caused by: " + exception.cause.Error()
 	}
 	return result
@@ -44,7 +44,7 @@ var _ fmt.Stringer = &Exception{}
 
 func AssertError(errors ...error) {
 	for _, e := range errors {
-		if !isNil(e) {
+		if IsThere(e) {
 			panic(e)
 		}
 	}

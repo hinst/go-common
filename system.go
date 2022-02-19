@@ -19,6 +19,11 @@ func GetExecutableDir() string {
 	return path.Dir(filePath)
 }
 
-func isNil(value interface{}) bool {
+func IsNil(value interface{}) bool {
 	return value == nil || reflect.ValueOf(value).IsNil()
+}
+
+// This function exists for better readability: to avoid !isNil { ugly }
+func IsThere(value interface{}) bool {
+	return !IsNil(value)
 }

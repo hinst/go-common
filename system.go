@@ -2,7 +2,6 @@ package common
 
 import (
 	"os"
-	"path"
 	"path/filepath"
 	"reflect"
 	"unsafe"
@@ -22,7 +21,7 @@ func init() {
 	AssertError(e)
 	ExecutableFilePath, e = filepath.Abs(executableFilePath)
 	AssertError(e)
-	ExecutableFileDirectory = path.Dir(ExecutableFilePath)
+	ExecutableFileDirectory = filepath.Dir(ExecutableFilePath)
 }
 
 func IsNil(value interface{}) bool {

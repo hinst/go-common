@@ -3,6 +3,7 @@ package common
 import (
 	"os"
 	"path"
+	"path/filepath"
 	"reflect"
 	"unsafe"
 )
@@ -13,10 +14,15 @@ var BitSizeOfInt = SizeOfInt * 8
 var SizeOfUint = unsafe.Sizeof(uint(0))
 var BitSizeOfUInt = SizeOfUint * 8
 
-func GetExecutableDir() string {
-	var filePath, e = os.Executable()
-	AssertError(CreateExceptionIf("Unable to get executable file path", e))
-	return path.Dir(filePath)
+var ExecutableFilePath string
+var ExecutableFileDirectory string
+
+func init() {
+	var executableFilePath, e = os.Executable()
+	AssertError(e)
+	ExecutableFilePath, e = filepath.Abs(executableFilePath)
+	AssertError(e)
+	ExecutableFileDirectory = path.Dir(ExecutableFilePath)
 }
 
 func IsNil(value interface{}) bool {

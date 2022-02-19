@@ -1,42 +1,46 @@
 package common
 
-import "fmt"
+import (
+	"fmt"
+	"runtime/debug"
+)
 
 type Exception struct {
-	message string
-	cause   error
+	message    string
+	stackTrace string
+	cause      error
 }
 
-func CreateException(message string, cause error) (result Exception) {
-	result.message = message
-	result.cause = cause
+func CreateException(message string, cause error) (result *Exception) {
+	result = &Exception{
+		message:    message,
+		stackTrace: string(debug.Stack()),
+		cause:      cause,
+	}
 	return
 }
 
-func (exception Exception) Error() string {
+func CreateExceptionIf(message string, cause error) (result *Exception) {
+	if cause != nil {
+		result = CreateException(message, cause)
+	}
+	return
+}
+
+func (exception *Exception) Error() string {
 	var result = exception.message
 	if exception.cause != nil {
-		result += "\n" + exception.cause.Error()
+		result += "\n• caused by: " + exception.cause.Error()
 	}
 	return result
 }
 
-func (exception Exception) String() string {
+func (exception *Exception) String() string {
 	return exception.Error()
 }
 
-var _ error = Exception{}
-var _ fmt.Stringer = Exception{}
-
-func AssertWrapped(e error, message string) {
-	if e != nil {
-		if len(message) > 0 {
-			panic(Exception{message: message, cause: e})
-		} else {
-			panic(e)
-		}
-	}
-}
+var _ error = &Exception{}
+var _ fmt.Stringer = &Exception{}
 
 func AssertError(errors ...error) {
 	for _, e := range errors {

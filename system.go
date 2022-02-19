@@ -3,6 +3,7 @@ package common
 import (
 	"os"
 	"path"
+	"reflect"
 	"unsafe"
 )
 
@@ -16,4 +17,8 @@ func GetExecutableDir() string {
 	var filePath, e = os.Executable()
 	AssertError(CreateExceptionIf("Unable to get executable file path", e))
 	return path.Dir(filePath)
+}
+
+func isNil(value interface{}) bool {
+	return value == nil || reflect.ValueOf(value).IsNil()
 }

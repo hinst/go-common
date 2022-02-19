@@ -44,7 +44,7 @@ var _ fmt.Stringer = &Exception{}
 
 func AssertError(errors ...error) {
 	for _, e := range errors {
-		if nil != e {
+		if !isNil(e) {
 			panic(e)
 		}
 	}

@@ -11,8 +11,7 @@ func InstallShutdownReceiver(receiver func()) {
 	signal.Notify(c, syscall.SIGINT)
 	signal.Notify(c, syscall.SIGTERM)
 	go func() {
-		for currentSignal := range c {
-			var _ = currentSignal
+		for range c {
 			receiver()
 		}
 	}()

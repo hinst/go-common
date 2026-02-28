@@ -41,11 +41,3 @@ func (exception *Exception) String() string {
 
 var _ error = &Exception{}
 var _ fmt.Stringer = &Exception{}
-
-func AssertError(errors ...error) {
-	for _, e := range errors {
-		if IsThere(e) {
-			panic(e)
-		}
-	}
-}

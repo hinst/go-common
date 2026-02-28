@@ -1,13 +1,14 @@
 package common
 
-func AssertError(err error) {
-	if err != nil {
-		panic(err)
+// Panic if error is present
+func AssertError(e error) {
+	if e != nil {
+		panic(e)
 	}
 }
 
-func AssertResultError[T any](result T, err error) T {
-	AssertError(err)
+func AssertResultError[T any](result T, e error) T {
+	AssertError(e)
 	return result
 }
 
